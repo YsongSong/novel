@@ -3,11 +3,13 @@ package novel.spider.impl;
 import novel.spider.configuration.Configuration;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
+import novel.spider.enums.NovelSiteEnum;
 import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
 import novel.spider.util.ChapterDetailSpiderFactory;
 import novel.spider.util.ChapterSpiderFactory;
+import novel.spider.util.NovelSpiderUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +58,13 @@ public class NovelDownload implements INovelDownload {
         ExecutorService service = Executors.newFixedThreadPool(maxThreadSize);
         Set<String> keySet = downloadTaskAlloc.keySet();
         List<Future<String>> tasks = new ArrayList<Future<String>>();
+
+        //通过这两段代码就可以创建缺失的路径
+        String savePath = config.getPath() + "/" + NovelSiteEnum.getEnumByUrl(url).getUrl();
+        new File(savePath).mkdirs();
+
         for (String key : keySet) {
-            tasks.add(service.submit(new DownloadCallable(config.getPath() + "/" + key + ".txt", downloadTaskAlloc.get(key))));
+            tasks.add(service.submit(new DownloadCallable(savePath + "/" + key + ".txt", downloadTaskAlloc.get(key), config.getTryTimes())));
         }
         service.shutdown();
         for (Future<String> future : tasks) {
@@ -69,27 +76,42 @@ public class NovelDownload implements INovelDownload {
                 e.printStackTrace();
             }
         }
-        return null;
+        System.out.println("马上进行文件合并");
+        NovelSpiderUtil.mulitFileMerge(savePath, null, true);
+        return savePath + "/merge.txt";
     }
 }
 
 class DownloadCallable implements Callable<String> {
     private List<Chapter> chapters;
     private String path;
-    public DownloadCallable(String path, List<Chapter> chapters) {
+    private int tryTimes;
+    public DownloadCallable(String path, List<Chapter> chapters, int tryTimes) {
         this.path = path;
         this.chapters = chapters;
+        this.tryTimes = tryTimes;
     }
 
     public String call() throws Exception {
         PrintWriter out = null;
         try {
-            out = new PrintWriter(new File(path));
+            out = new PrintWriter(new File(path), "UTF-8");
             for (Chapter chapter : chapters) {
                 IChapterDetailSpider spider = ChapterDetailSpiderFactory.getChapterDetailSpider(chapter.getUrl());
-                ChapterDetail detail = spider.getChapterDetail(chapter.getUrl());
-                out.println(detail.getTitle());
-                out.println(detail.getContent());
+                ChapterDetail detail = null;
+                /**
+                 * 尝试tryTimes次
+                 */
+                for (int i = 0; i < tryTimes; i++) {
+                    try {
+                        detail = spider.getChapterDetail(chapter.getUrl());
+                        out.println(detail.getTitle());
+                        out.println(detail.getContent());
+                        break;
+                    } catch (RuntimeException e) {
+                        System.err.println("尝试第[" + (i + 1) + "/" + tryTimes + "]次下载失败了！");
+                    }
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

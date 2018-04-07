@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 小说信息实体
  * Created by Yang on 2018/3/23 0023.
  */
 public class Novel implements Serializable {

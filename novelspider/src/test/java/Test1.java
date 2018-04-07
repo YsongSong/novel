@@ -2,15 +2,13 @@ import novel.spider.configuration.Configuration;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.enums.NovelSiteEnum;
-import novel.spider.impl.DefaultChapterDetailSpider;
-import novel.spider.impl.DefaultChapterSpider;
-import novel.spider.impl.NovelDownload;
+import novel.spider.impl.*;
 import novel.spider.impl.abstracts.AbstractChapterDetailSpider;
 import novel.spider.impl.abstracts.AbstractChapterSpider;
-import novel.spider.impl.BxwxChapterSpider;
 import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
+import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderUtil;
 import org.junit.Test;
 
@@ -183,5 +181,11 @@ public class Test1 {
     @Test
     public void testMerge() {
         NovelSpiderUtil.mulitFileMerge("D:/1",null,true);
+    }
+
+    @Test
+    public void testTd() {
+        INovelSpider novelSpider = new BxwxNovelSpider();
+        novelSpider.getNovel("http://www.kanshuzhong.com/toplist/allvisit/1/");
     }
 }

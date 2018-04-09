@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/novelspider/pom.xml" />
+        <option value="$PROJECT_DIR$/novelstorage/pom.xml" />
       </list>
     </option>
   </component>

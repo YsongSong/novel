@@ -134,7 +134,7 @@ public final class NovelSpiderUtil {
     public static int getNovelStatus(String status) {
         if (status.contains("连载")) {
             return 1;
-        } else if (status.contains("完结") || status.contains("完成")) {
+        } else if (status.contains("完结") || status.contains("完成") || status.contains("完本")) {
             return 2;
         } else {
             throw new RuntimeException ("不支持的书籍状态：" + status);

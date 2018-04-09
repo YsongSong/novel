@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="novelspider" />
+        <module name="novelstorage" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="novelspider" target="1.6" />
+      <module name="novelstorage" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

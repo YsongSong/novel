@@ -1,6 +1,7 @@
 import novel.spider.configuration.Configuration;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
+import novel.spider.entitys.Novel;
 import novel.spider.enums.NovelSiteEnum;
 import novel.spider.impl.*;
 import novel.spider.impl.abstracts.AbstractChapterDetailSpider;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -186,6 +188,41 @@ public class Test1 {
     @Test
     public void testTd() {
         INovelSpider novelSpider = new BxwxNovelSpider();
-        novelSpider.getNovel("http://www.kanshuzhong.com/toplist/allvisit/1/");
+        List<Novel> novels =  novelSpider.getsNovel("https://www.bxwx9.org/modules/article/index.php?fullflag=1",3);
+        for (Novel novel : novels) {
+            System.out.println(novel);
+        }
+    }
+
+    @Test
+    public void testPrint() {
+        INovelSpider novelSpider = new KanShuZhongNovelSpider();
+        novelSpider.getsNovel("http://www.kanshuzhong.com/toplist/allvisit/1/",3);
+    }
+
+    @Test
+    public void testKanShuZhongIterator() {
+        INovelSpider spider = new KanShuZhongNovelSpider();
+        Iterator<List<Novel>> iterator = spider.iterator("http://www.kanshuzhong.com/map/A/1/", 10);
+        while (iterator.hasNext()) {
+            List<Novel> novels = iterator.next();
+            System.err.println("URL：" + spider.next());
+//			for (Novel novel : novels) {
+//				System.out.println(novel);
+//			}
+        }
+    }
+
+    @Test
+    public void testBxwxIterator() {
+        INovelSpider spider = new BxwxNovelSpider();
+        Iterator<List<Novel>> iterator = spider.iterator("https://www.bxwx9.org/binitialE/0/1.htm", 3);
+        while (iterator.hasNext()) {
+            List<Novel> novels = iterator.next();
+            System.err.println("URL：" + spider.next());
+//			for (Novel novel : novels) {
+//				System.out.println(novel);
+//			}
+        }
     }
 }

@@ -23,7 +23,35 @@ public final class NovelSpiderUtil {
     private static void init() {
         SAXReader reader = new SAXReader();
         try {
-            Document doc = reader.read(new File("conf/Spider-Rule.xml"));  //生成指定文档的实体
+//            Document doc = reader.read(new FileInputStream("conf/Spider-Rule.xml"));  //生成指定文档的实体
+            Document doc = reader.read(new FileInputStream("D:/opt/web/novelweb/conf/Spider-Rule.xml"));  //生成指定文档的实体
+            Element root = doc.getRootElement();   //获取根节点
+            List<Element> sites = root.elements("site");   //sites节点
+            //遍历sites节点
+            for (Element site : sites) {
+                List<Element> subs = site.elements();   //子节点
+                Map<String, String> subMap = new HashMap<String, String>();
+                //遍历site节点
+                for (Element sub : subs) {
+                    String name = sub.getName();
+                    String text = sub.getTextTrim();
+                    subMap.put(name, text);
+                }
+                CONTEXT_MAP.put(NovelSiteEnum.getEnumByUrl(subMap.get("url")), subMap);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("配置文件加载错误");
+        }
+    }
+
+    /**
+     * 给定配置文件位置
+     * @param path
+     */
+    public static void setConfigPath(String path) {
+        SAXReader reader = new SAXReader();
+        try {
+            Document doc = reader.read(new FileInputStream(path));  //生成指定文档的实体
             Element root = doc.getRootElement();   //获取根节点
             List<Element> sites = root.elements("site");   //sites节点
             //遍历sites节点
@@ -49,6 +77,7 @@ public final class NovelSpiderUtil {
     public static Map<String, String> getContext(NovelSiteEnum novelSiteEnum) {
         return CONTEXT_MAP.get(novelSiteEnum);
     }
+
 
     /**
      *  多个文件合并为一个文件，合并规则：按文件名分割排序
@@ -139,5 +168,14 @@ public final class NovelSpiderUtil {
         } else {
             throw new RuntimeException ("不支持的书籍状态：" + status);
         }
+    }
+
+    public static String formatDate(Date date,String format){
+        String result="";
+        SimpleDateFormat sdf=new SimpleDateFormat(format);
+        if(date!=null){
+            result=sdf.format(date);
+        }
+        return result;
     }
 }

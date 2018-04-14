@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="novelweb:war">
+    <output-path>$PROJECT_DIR$/novelweb/target</output-path>
+    <root id="archive" name="novel.web.war">
+      <element id="artifact" artifact-name="novelweb:war exploded" />
+    </root>
+  </artifact>
+</component>

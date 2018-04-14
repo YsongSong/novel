@@ -7,6 +7,7 @@ import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.util.NovelSpiderUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public abstract class AbstractChapterDetailSpider extends AbstractSpider impleme
             doc.absUrl(url);
             Map<String, String> context = NovelSpiderUtil.getContext(NovelSiteEnum.getEnumByUrl(url));
             ChapterDetail detail = new ChapterDetail();
+            String baseUrl = context.get("url");
 
             //  拿标题内容
             String titleSelector = context.get("chapter-detail-title-selector");
@@ -33,17 +35,22 @@ public abstract class AbstractChapterDetailSpider extends AbstractSpider impleme
             String contentSelector = context.get("chapter-detail-content-selector");
             detail.setContent(doc.select(contentSelector).first().text().replace("${line}", "\n"));
 
-            //  拿前一章地址
+            //拿前一章的地址
             String prevSelector = context.get("chapter-detail-prev-selector");
             splits = prevSelector.split("\\,");
             splits = pareseSelector(splits);
-            detail.setPrev(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
+            Elements e = doc.select(prevSelector);
+//            detail.setPrev(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
+            String prev = e.get(Integer.parseInt(splits[1])).attr("href");
+            detail.setPrev(baseUrl + prev);
 
-            //  拿后一章地址
+            //拿后一章的地址
             String nextSelector = context.get("chapter-detail-next-selector");
             splits = nextSelector.split("\\,");
             splits = pareseSelector(splits);
-            detail.setNext(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
+//            detail.setNext(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
+            String next = e.get(Integer.parseInt(splits[1])).attr("href");
+            detail.setNext(baseUrl + next);
 
             return detail;
         } catch (Exception e) {

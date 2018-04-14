@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="novelspider" />
         <module name="novelstorage" />
+        <module name="novelweb" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="novelspider" target="1.6" />
       <module name="novelstorage" target="1.5" />
+      <module name="novelweb" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

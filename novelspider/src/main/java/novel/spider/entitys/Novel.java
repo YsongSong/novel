@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by Yang on 2018/3/23 0023.
  */
 public class Novel implements Serializable {
+    private int id;
     private String name;    // 小说名(书名)
     private String author;  // 作者名
     private String url;     // 小说链接
@@ -18,7 +19,15 @@ public class Novel implements Serializable {
     private int status;     // 小说状态(1:连载,2:完结)
     private char firstLetter;   // 书名的首字母
     private int platformId;     // 小说平台的id
-    private Date addTime;       // 这本小说存储到我们数据库的时间
+    private String addTime;       // 这本小说存储到我们数据库的时间
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -100,11 +109,11 @@ public class Novel implements Serializable {
         this.platformId = platformId;
     }
 
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 

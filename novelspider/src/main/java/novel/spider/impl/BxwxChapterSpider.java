@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * 笔下文学章节列表抓取实现
  * Created by Yang on 2018/3/14 0014.
  */
 public class BxwxChapterSpider extends AbstractChapterSpider {

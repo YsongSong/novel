@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/novel.iml" filepath="$PROJECT_DIR$/novel.iml" />
       <module fileurl="file://$PROJECT_DIR$/novelspider/novelspider.iml" filepath="$PROJECT_DIR$/novelspider/novelspider.iml" />
       <module fileurl="file://$PROJECT_DIR$/novelstorage/novelstorage.iml" filepath="$PROJECT_DIR$/novelstorage/novelstorage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/novelweb/novelweb.iml" filepath="$PROJECT_DIR$/novelweb/novelweb.iml" />
     </modules>
   </component>
 </project>

@@ -6,7 +6,9 @@ import novel.web.service.NovelService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Yang on 2018/4/14 0014.
@@ -24,7 +26,9 @@ public class NovelServiceImpl implements NovelService {
 
     @Override
     public List<Novel> getNovelByKeyword(String keyword, int platformId) {
-
-        return null;
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("keyword", "%" + keyword + "%");
+        map.put("platformId", platformId + "");
+        return mapper.getNovelByKeyword2(map);
     }
 }

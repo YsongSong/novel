@@ -25,12 +25,21 @@
     from tbl_novel
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <select id="getNovelByKeyword" resultMap="BaseResultMap" parameterType="string">
     select
     <include refid="Base_Column_List" />
     from tbl_novel
     where name LIKE #{keyword} OR author LIKE #{keyword}
   </select>
+
+  <select id="getNovelByKeyword2" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_novel
+    where (name LIKE #{keyword} OR author LIKE #{keyword}) AND (platform_id = #{platformId})
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_novel
     where id = #{id,jdbcType=BIGINT}

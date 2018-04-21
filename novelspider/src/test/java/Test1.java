@@ -10,6 +10,7 @@ import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
 import novel.spider.interfaces.INovelSpider;
+import novel.spider.util.ChapterDetailSpiderFactory;
 import novel.spider.util.NovelSpiderUtil;
 import org.junit.Test;
 
@@ -67,7 +68,7 @@ public class Test1 {
 
     @Test
     public void testChapterDetail() {
-        IChapterDetailSpider chapterDeailSpider = new DefaultChapterDetailSpider();
+        IChapterDetailSpider chapterDeailSpider = ChapterDetailSpiderFactory.getChapterDetailSpider("https://www.bxwx9.org/b/5/5740/41209550.html");
         ChapterDetail detail = chapterDeailSpider.getChapterDetail("https://www.bxwx9.org/b/5/5740/41209550.html");
         System.out.println(detail);
     }
@@ -118,16 +119,19 @@ public class Test1 {
      */
     @Test
     public void testGetChapterDetail() {
-        IChapterDetailSpider spider = new DefaultChapterDetailSpider();
-        System.out.println(spider.getChapterDetail("http://www.23wx.cc/du/59/59652/6974953.html").getContent());
+        IChapterDetailSpider spider =  ChapterDetailSpiderFactory.getChapterDetailSpider("https://www.bxwx9.org/b/62/62724/11455541.html");
+//        System.out.println(spider.getChapterDetail("http://www.23wx.cc/du/59/59652/6974953.html").getContent());
+        System.out.println(spider.getChapterDetail("https://www.bxwx9.org/b/62/62724/11455541.html","https://www.bxwx9.org/b/62/62724/" ));
     }
+//    http://lwaiting.vicp.io:38714/novel/chapterList.do?url=https://www.bxwx9.org/b/154/154386/
+//    http://lwaiting.vicp.io:38714/novel/chapterDetail.do?url=https://www.bxwx9.org/b/62/62724/11455541.html&baseUrl=https://www.bxwx9.org/b/62/62724/
 
     /**
      * 该测试方法用于测试是否能拿到看书中网站的章节详细内容
      */
     @Test
     public void testGetChapterDetail2() {
-        IChapterDetailSpider spider = new DefaultChapterDetailSpider();
+        IChapterDetailSpider spider = ChapterDetailSpiderFactory.getChapterDetailSpider("ttp://www.kanshuzhong.com/book/103251/18491186.html");
         System.out.println(spider.getChapterDetail("http://www.kanshuzhong.com/book/103251/18491186.html"));
     }
     /**
@@ -135,8 +139,8 @@ public class Test1 {
      */
     @Test
     public void testGetChapterDetail3() {
-        IChapterDetailSpider spider = new DefaultChapterDetailSpider();
-        System.out.println(spider.getChapterDetail("https://www.bxwx9.org/b/165/165072/27304945.html"));
+        IChapterDetailSpider spider = ChapterDetailSpiderFactory.getChapterDetailSpider("http://www.kanshuzhong.com/book/1215/432482.html");
+        System.out.println(spider.getChapterDetail("http://www.kanshuzhong.com/book/1215/432482.html"));
     }
 
     @Test

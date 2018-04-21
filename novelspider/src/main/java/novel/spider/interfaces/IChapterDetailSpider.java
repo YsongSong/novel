@@ -9,6 +9,12 @@ public interface IChapterDetailSpider {
 
     /**
      * 给我一个url，我就给你一个对应网站的章节内容实体
+     *
      */
     public ChapterDetail getChapterDetail(String url) ;
+    /**
+     * 给我一个url，我就给你一个对应网站的章节内容实体
+     * baseUrl，小说的url
+     */
+    public ChapterDetail getChapterDetail(String url, String baseUrl) ;
 }

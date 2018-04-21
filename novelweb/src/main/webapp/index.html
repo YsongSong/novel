@@ -20,7 +20,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="input-group">
-						<input type="text" id="keyword" class="form-control"  placeholder="可以输入书名，作者名，甚至可以是符合条件的URL...">
+						<!--<input type="text" id="keyword" class="form-control"  placeholder="可以输入书名，作者名，甚至可以是符合条件的URL...">-->
+						<input type="text" id="keyword" class="form-control"  placeholder="可以输入书名，作者名">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button" id="btnSearch">小说搜搜</button>
 						</span>
@@ -44,6 +45,8 @@
 			</thead>
 			<tbody id="list">
 			</tbody>
+
+			<!--
 			<tfoot>
 				<tr>
 					<td colspan="5">
@@ -61,6 +64,8 @@
 					</td>
 				</tr>
 			</tfoot>
+			-->
+
 		</table>
 	</div>
 	<!-- Bootstrap core JavaScript
@@ -72,7 +77,7 @@
 	<script>
 		$(function() {
 			$("#btnSearch").click(search);
-		})
+		});
 		function search() {
 			var val = $("#keyword").val().trim();
 			if (val.length == 0) {
@@ -80,7 +85,7 @@
 				return;
 			}
 			$.ajax({
-				url:"./novelSearch.do",
+				url:"./search.do",
 				type:"post",
 				dataType:"json",
 				data: {
@@ -110,9 +115,9 @@
 			} else if (platformId == 2) {
 				return "笔趣阁";
 			} else if (platformId == 3) {
-				return "看书中";
-			} else if (platformId == 4) {
 				return "笔下文学";
+			} else if (platformId == 4) {
+				return "看书中";
 			} else {
 				return "为知";
 			}

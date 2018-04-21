@@ -1,7 +1,8 @@
 package novel.spider.util;
 
 import novel.spider.enums.NovelSiteEnum;
-import novel.spider.impl.DefaultChapterDetailSpider;
+import novel.spider.impl.BxwxChapterDetailSpider;
+import novel.spider.impl.KanShuZhongChapterDetailSpider;
 import novel.spider.interfaces.IChapterDetailSpider;
 
 /**
@@ -17,9 +18,11 @@ public final class ChapterDetailSpiderFactory {
         switch (novelSiteEnum) {
             case BiQuGe:
             case BiXiaWenXue:
+                chapterDetailSpider = new BxwxChapterDetailSpider();
+                break;
             case DingDianXiaoShuo:
             case KanShuZhong:
-                chapterDetailSpider = new DefaultChapterDetailSpider();
+                chapterDetailSpider = new KanShuZhongChapterDetailSpider();
                 break;
         }
         return chapterDetailSpider;

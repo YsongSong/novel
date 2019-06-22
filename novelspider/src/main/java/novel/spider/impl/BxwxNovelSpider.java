@@ -27,7 +27,7 @@ public class BxwxNovelSpider extends AbstractNovelSpider {
                 Elements tds = tr.getElementsByTag("td");
                 Novel novel = new Novel();
                 novel.setName(tds.get(0).text());
-                String novelUrl = tds.get(0).getElementsByTag("a").first().absUrl("href").replace(".htm", "/").replace("/binfo/", "/b/");
+                String novelUrl = tds.get(0).getElementsByTag("a").first().absUrl("href").replace(".htm", "/index.html").replace("/binfo/", "/b/");
                 novel.setUrl(novelUrl);
                 novel.setLastUpdateChapter(tds.get(1).text());
                 novel.setLastUpdateChapterUrl(tds.get(1).getElementsByTag("a").first().absUrl("href"));
